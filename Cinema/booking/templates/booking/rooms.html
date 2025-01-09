@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Room</title>
+    <style>
+        /* Style for the room buttons */
+        .room-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .room-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .room-card h3 {
+            margin-top: 0;
+        }
+
+        .room-details {
+            margin-bottom: 15px;
+        }
+
+        .learn-more-button {
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .room-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Centering content */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Available Rooms</h1>
+
+    <div class="room-container">
+        {% for room in rooms %}
+            <div class="room-card">
+                <h3>{{ room.title }}</h3>
+                <div class="room-details">
+                    <p>Rows: {{ room.rows }}</p>
+                    <p>Seats per row: {{ room.seats }}</p>
+                </div>
+                <a href="{% url 'movies' room_id=room.id %}" class="room-button">Read More</a>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
