@@ -75,11 +75,17 @@ class Template_SeatPlace(LoginRequiredMixin, TemplateView):
         row, seat = map(int, seat_index.split("-"))
         schedule = models.Schedule.objects.filter(id=schedule_id).first()
 
-        models.Booking.objects.create(
-            user=request.user,
-            schedule=schedule,
+        temp = models.Booking.objects.filter(
             row=row,
             seat=seat,
-        )
+            schedule=schedule,
+        ).first()
+        if not temp:
+            models.Booking.objects.create(
+                user=request.user,
+                schedule=schedule,
+                row=row,
+                seat=seat,
+            )
 
         return redirect("seat_selection", schedule_id=schedule_id)

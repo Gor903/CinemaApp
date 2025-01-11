@@ -1,23 +1,99 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
+{% extends "base/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}Login{% endblock %}
+
+{% block style %}
+    body {
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1f1f1f;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #282828;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-container input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        background-color: #444;
+        color: #e4e4e4;
+        border: 1px solid #666;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .login-container input:focus {
+        border-color: #28a745;
+        outline: none;
+    }
+
+    .login-container button {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .login-container button:hover {
+        background-color: #218838;
+    }
+
+    .login-container .error {
+        color: #dc3545;
+        margin-bottom: 15px;
+    }
+
+    .login-container .register-link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #007bff;
+        text-decoration: none;
+    }
+    .login-container .register-link:hover {
+        text-decoration: underline;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <h2 style="color:#FFF">Login</h2>
+
+    {% if form.errors %}
+        <div class="error">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
     {% endif %}
-    <form method="POST">
+
+    <form method="post">
         {% csrf_token %}
-        <label>Username:</label><br>
-        <input type="text" name="username" required><br>
-        <label>Password:</label><br>
-        <input type="password" name="password" required><br><br>
+        <input type="text" name="username" placeholder="Username" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
         <button type="submit">Login</button>
+        <br>
     </form>
-    <a href="{% url 'register' %}">Don't have an account? Register</a>
-</body>
-</html>
+
+    <a href="{% url 'register' %}" class="register-link">Don't have an account? Register here.</a>
+</div>
+{% endblock %}

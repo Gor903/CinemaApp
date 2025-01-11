@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Room</title>
-    <style>
-        /* Style for the room buttons */
+{% extends "base/base.html" %}
+
+{% block title %}Rooms{% endblock %}
+
+{% block style %}
         .room-container {
             display: flex;
             flex-wrap: wrap;
@@ -42,21 +39,20 @@
             background-color: #0056b3;
         }
 
-        /* Centering content */
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f7f7f7;
-        }
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1f1f1f;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+    }
 
         h1 {
             text-align: center;
         }
-    </style>
-</head>
-<body>
-
+{% endblock %}
+{% block content %}
     <h1>Available Rooms</h1>
 
     <div class="room-container">
@@ -71,6 +67,4 @@
             </div>
         {% endfor %}
     </div>
-
-</body>
-</html>
+{% endblock %}

@@ -1,73 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies</title>
-    <style>
-        /* Basic styling for movie items */
-        .movie-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
 
-        .movie-card {
-            border: 1px solid #ccc;
-            padding: 20px;
-            width: 250px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+{% extends "base/base.html" %}
 
-        .movie-card h3 {
-            margin-top: 0;
-        }
+{% block title %}Movies{% endblock %}
 
-        .movie-details {
-            margin-bottom: 15px;
-        }
+{% block style %}
+    body {
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1f1f1f; /* Dark background */
+        margin: 0;
+        padding: 0;
+        color: #fff;
+    }
 
-        .learn-more-button {
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 5px;
-            display: inline-block;
-            text-align: center;
-        }
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 32px;
+        color: #fff;
+    }
 
-        .learn-more-button:hover {
-            background-color: #0056b3;
-        }
+    .movie-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+        gap: 20px;
+        padding: 0 10px;
+    }
 
-        /* Centering content */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f7f7f7;
-        }
+    .movie-card {
+        display: flex;
+        justify-content: center;
+        width: 400px;
+        height: 350px;
+        background-color: #ffffff;
+        border-radius: 50px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        h1 {
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
+    .movie-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
 
-    <h1>Available Movies</h1>
+    .movie-card img {
+        width: 50%;
+        height: 50px;
+    }
 
+    .movie-info {
+        padding: 15px;
+    }
+
+    .movie-info h3 {
+        font-size: 22px;
+        margin: 0 0 10px;
+        color: #222;
+    }
+
+    .movie-info h5 {
+        font-size: 18px;
+        margin: 0 0 15px;
+        color: #555;
+    }
+
+{% endblock %}
+
+{% block content %}
+    <h1 style="color:#FFF">Available Movies</h1>
     <div class="movie-container">
         {% for event in schedule %}
             <div class="movie-card">
-                <h3>{{ event.movie.title }}</h3>
-                <h5>{{ event.movie.duration }}</h5>
-                <a href="/booking/rooms/{{ event.id }}" class="learn-more-button">Choose your seat</a>
+                <img src="{{ event.movie.poster.url }}" alt="{{ event.movie.title }}" style="height: 300px; width=500px">
+                <div class="movie-info">
+                    <a href="/booking/rooms/{{ event.id }}" class="learn-more-button"><h3>{{ event.movie.title }}</h3></a>
+                    <h5>{{ event.movie.duration }}</h5>
+                    <h5>{{ event.starts_at }} </h5>
+                </div>
             </div>
+        <br>
         {% endfor %}
     </div>
-
-</body>
-</html>
+<br><br>
+<div>
+    <a href="/booking/rooms">Back</a>
+</div>
+{% endblock %}

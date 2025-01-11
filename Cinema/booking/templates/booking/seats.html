@@ -1,78 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinema Seat Selection</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-            padding: 20px;
-        }
-        .seat-grid {
-            display: inline-block;
-            padding: 10px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .seat-row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-        .seat-btn {
-            width: 40px;
-            height: 40px;
-            background-color: green;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 5px;
-        }
-        .seat-btn:hover {
-            background-color: #45a049;
-        }
-        .seat-btn-unavailable {
-            width: 40px;
-            height: 40px;
-            background-color: red;
-            border: none;
-            border-radius: 5px;
-            cursor: not-allowed;
-            margin: 5px;
-        }
-    </style>
-</head>
-<body>
+{% extends "base/base.html" %}
 
-    <h1>Cinema Seat Selection</h1>
-    <p>Click on an available seat to select it.</p>
+{% block title %}Seat Selection{% endblock %}
 
-    <div class="seat-grid">
-        {% for row in seats %}
-            <div class="seat-row">
-                {% for seat in row %}
-                    {% if seat == 1 %}
-                        <form method="post" action="{% url 'seat_selection' schedule_id=schedule_id %}" style="display: inline;">
-                            {% csrf_token %}
-                            <button type="submit" name="seat" value="{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}" class="seat-btn">
-                                🟩
-                            </button>
-                        </form>
-                    {% else %}
-                        <button type="button" class="seat-btn-unavailable" disabled>
-                            🟥
+{% block header %}Select Your Seat{% endblock %}
+
+{% block content %}
+<p>Click on an available seat to select it.</p>
+<h5>Display here</h5>
+<div class="seat-grid">
+    {% for row in seats %}
+        <div class="seat-row">
+            {% for seat in row %}
+                {% if seat == 1 %}
+                    <form method="post" action="{% url 'seat_selection' schedule_id=schedule_id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" name="seat" value="{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}" class="seat-btn">
+                            🪑
                         </button>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endfor %}
-    </div>
-
-</body>
-</html>
+                    </form>
+                {% else %}
+                    <button type="button" class="seat-btn-unavailable" disabled>
+                        🔒
+                    </button>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+<br><br>
+<div>
+    <a href="/booking/rooms">Back</a>
+</div>
+{% endblock %}
